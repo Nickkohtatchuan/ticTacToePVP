@@ -1,0 +1,120 @@
+
+<html>
+
+<link rel='stylesheet' type='text/css' href='tictactoe.css'>
+<link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Monoton|Playfair+Display" rel="stylesheet">
+<meta charset="UTF-8">
+
+
+
+<Body>
+	<h1>TIC TAC TOE ✏️</h1>
+		<p>
+			<b> Player O Score</b>
+				<span id='PlayerOne'>0</span>
+				<span id='PlayerTwo'>0</span>
+			<b> Player X Score</b>
+		</p>
+		<p id='turn'>Begin! Player O starts</p>
+		<div class='background'>
+				<p class=box id="A1"></p>
+				<p class=box id="A2"></p> 
+				<p class=box id="A3"></p>
+				<p class=box id="B1"></p> 
+				<p class=box id="B2"></p>
+				<p class=box id="B3"></p> 
+				<p class=box id="C1"></p>
+				<p class=box id="C2"></p> 
+				<p class=box id="C3"></p>
+		</div>
+		<div><button id="reset">🥊 Looking for a rematch? 🥊 <br>(click here)<br></button><div>
+</Body>
+
+<script>
+
+	const container = document.getElementsByClassName("background")[0];
+	const boxes = document.querySelectorAll('.box')
+	const turn = document.getElementById('turn');
+	const winP1 = document.getElementById("PlayerOne");
+	const winP2 = document.getElementById("PlayerTwo");
+	const reset = document.getElementById('reset');
+
+	//Highlight winning box
+	  function winningBox (box1, box2, box3){
+	  box1.classList.add ("win");
+	  box2.classList.add ("win");
+	  box3.classList.add ("win");
+	  	if(box1.innerHTML == "O"){
+	  		turn.innerHTML = "Player O Wins! ⚡";
+	  		winP1.innerHTML ++;}
+	  	else if(box1.innerHTML == "X"){
+	  		turn.innerHTML = "Player X Wins! ✊";
+	  		winP2.innerHTML ++;}
+	  	}
+
+	//Define O and X by number of turns
+		let i=0;
+	
+		container.onclick = function(event){
+			if(event.target != container && event.target.innerHTML =="" && i%2 == 0){
+				event.target.innerHTML = 'O';
+				turn.innerHTML = 'Player X turn';
+				i++;}
+
+			else if (event.target != container && event.target.innerHTML =="" && i%2 == 1){
+				event.target.innerHTML = 'X';
+				turn.innerHTML = 'Player O turn';
+				i++;}
+	
+	// Win-Lose condition
+		//Horizontal
+		   	if(A1.innerHTML != '' && A1.innerHTML == A2.innerHTML && A1.innerHTML == A3.innerHTML){
+		   	winningBox(A1,A2,A3);
+		   	container.classList.add('gameOver')}
+	    	else if (B1.innerHTML != '' && B1.innerHTML == B2.innerHTML && B1.innerHTML == B3.innerHTML){
+	       	winningBox(B1,B2,B3);
+	       	container.classList.add('gameOver')}
+	    	else if (C1.innerHTML != '' && C1.innerHTML == C2.innerHTML && C1.innerHTML == C3.innerHTML){
+	       	winningBox(C1,C2,C3);
+	       	container.classList.add('gameOver')}
+	       
+	       //Vertical
+	    	else if (A1.innerHTML != '' && A1.innerHTML == B1.innerHTML && A1.innerHTML == C1.innerHTML){
+	       	winningBox(A1,B1,C1);
+	       	container.classList.add('gameOver')}
+	   		else if (A2.innerHTML != '' && A2.innerHTML == B2.innerHTML && A2.innerHTML == C2.innerHTML){
+	       	winningBox(A2,B2,C2);
+	       	container.classList.add('gameOver')}
+	    	else if (A3.innerHTML != '' && A3.innerHTML == B3.innerHTML && A3.innerHTML == C3.innerHTML){
+	       	winningBox(A3,B3,C3);
+	       	container.classList.add('gameOver')}
+
+	       //Diagonal
+	     	else if (A1.innerHTML != '' && A1.innerHTML == B2.innerHTML && A1.innerHTML == C3.innerHTML){
+	       	winningBox(A1,B2,C3);
+	       	container.classList.add('gameOver')}
+	     	else if (A3.innerHTML != '' && A3.innerHTML == B2.innerHTML && A3.innerHTML == C1.innerHTML){
+	       	winningBox(A3,B2,C1);
+	       	container.classList.add('gameOver')}
+	       
+	       //Draw outcome
+			else if (A1.innerHTML!='' && A2.innerHTML!='' && A3.innerHTML!='' && B1.innerHTML!='' && B2.innerHTML!='' && B3.innerHTML!='' && C1.innerHTML!='' && C2.innerHTML!='' && C3.innerHTML!=''){
+			turn.innerHTML="Tie!";
+			container.classList.add('gameOver')}
+
+		}
+
+       //Reset game
+       reset.onclick= function (){
+       container.classList.remove('gameOver');
+       for(a=0; a<boxes.length; a++){
+       	boxes[a].innerHTML ='';
+       	boxes[a].classList.remove ("win");
+       if (i%2 == 0){
+       	turn.innerHTML ='Begin! Player O starts';}
+       else turn.innerHTML = 'Begin! Player X starts';}}
+      
+
+</script>		
+</html>
